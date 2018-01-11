@@ -113,7 +113,7 @@ common options,these options must be same on both side:
     --raw-mode            <string>        avaliable values:faketcp(default),udp,icmp
     -k,--key              <string>        password to gen symetric key
     --cipher-mode         <string>        avaliable values:aes128cbc,xor(default),none,<<this is changed>>
-    --over-wait           <number>        the interval setting of auto password change,for pass the rules study
+    --over-wait           <number>        the interval setting of auto password change,for pass the rules study,<<this is changed>>
     --auth-mode           <string>        avaliable values:md5(default),crc32,simple,none
     -a,--auto-rule                        auto add (and delete) iptables rule
     -g,--gen-rule                         generate iptables rule then exit,so that you can copy and
