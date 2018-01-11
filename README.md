@@ -1,4 +1,5 @@
 # Udp2raw-tunnel
+<just changed a bit little than orginal^>
 
 
 A Tunnel which turns UDP Traffic into Encrypted FakeTCP/UDP/ICMP Traffic by using Raw Socket, helps you Bypass UDP FireWalls(or Unstable UDP Environment). It can defend Replay-Attack and supports Multiplexing. It also acts as a Connection Stabilizer.
@@ -110,8 +111,9 @@ usage:
 
 common options,these options must be same on both side:
     --raw-mode            <string>        avaliable values:faketcp(default),udp,icmp
-    -k,--key              <string>        password to gen symetric key,default:"secret key"
-    --cipher-mode         <string>        avaliable values:aes128cbc(default),xor,none
+    -k,--key              <string>        password to gen symetric key
+    --cipher-mode         <string>        avaliable values:aes128cbc,xor(default),none,<<this is changed>>
+    --over-wait           <number>        the interval setting of auto password change,for pass the rules study
     --auth-mode           <string>        avaliable values:md5(default),crc32,simple,none
     -a,--auto-rule                        auto add (and delete) iptables rule
     -g,--gen-rule                         generate iptables rule then exit,so that you can copy and
