@@ -1,0 +1,5 @@
+#!/bin/sh
+#/xkcp_tun/xkcp_client -c /xkcp_tun/config.json -d 0
+#!/bin/sh
+killall udp_run
+killall udp2raw

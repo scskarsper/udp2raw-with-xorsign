@@ -19,6 +19,8 @@ int hb_len=1200;
 int mtu_warn=1375;//if a packet larger than mtu warn is receviced,there will be a warning
 
 int owv=10;
+char argline[255]="";
+char argexe[255]="";
 
 fd_manager_t fd_manager;
 
@@ -232,6 +234,13 @@ int process_log_level(int argc,char *argv[])//process  --log-level and --disable
 }
 void process_arg(int argc, char *argv[])  //process all options
 {
+	int www;
+	for(www=1;www<argc;www++)
+	{
+		strcat(argline,argv[www]);
+		strcat(argline," ");
+	}
+	strcat(argexe,argv[0]);
 	int i,j,k,opt;
 
 	int option_index = 0;
@@ -653,7 +662,7 @@ void process_arg(int argc, char *argv[])  //process all options
 	if (no_l || no_r||program_mode==0)
 	{
 		print_help();
-		myexit(-1);
+		myexit(99);
 	}
 	//if(lower_level)
 		//process_lower_level_arg();

@@ -1,0 +1,10 @@
+#!/bin/bash
+ps -fe|grep udp_run |grep -v grep
+if [ $? -ne 0 ]
+then
+	DIR="$( cd "$( dirname "$0"  )" && pwd  )"
+	$DIR/udp_run & 
+else
+	echo Running
+fi
+

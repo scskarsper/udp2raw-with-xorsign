@@ -130,6 +130,8 @@ int client_on_timer(conn_info_t &conn_info) //for client. called when a timer is
 		{
 			conn_info.state.client_current_state=client_idle;
 			mylog(log_info,"state back to client_idle from client_handshake1\n");
+			mylog(log_fatal,"Handshake Failure.\n");
+			myexit(-55);
 			return 0;
 
 		}
@@ -1134,7 +1136,7 @@ int client_event_loop()
 	if (bind(udp_fd, (struct sockaddr*) &local_me, slen) == -1) {
 		mylog(log_fatal,"socket bind error\n");
 		//perror("socket bind error");
-		myexit(1);
+		myexit(-55);
 	}
 	setnonblocking(udp_fd);
 	epollfd = epoll_create1(0);

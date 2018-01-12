@@ -1,0 +1,10 @@
+#!/bin/bash
+DIR="$( cd "$( dirname "$0"  )" && pwd  )"
+killall udp2raw
+sleep 1
+for (( i=1; i<=5; ))
+do
+	$DIR/udp2raw {INPUT YOUR SETTING PARAMS HERE}
+	sleep 1
+	echo slp 1
+done

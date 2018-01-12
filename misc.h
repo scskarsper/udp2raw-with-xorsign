@@ -18,6 +18,8 @@ extern int hb_len;
 extern int mtu_warn;
 
 extern int owv;
+extern char argline[255];
+extern char argexe[255];
 
 const u32_t max_handshake_conn_num=10000;
 const u32_t max_ready_conn_num=1000;

@@ -300,8 +300,67 @@ bool larger_than_u16(uint16_t a,uint16_t b)
 	}
 }
 
+void rebootsys()
+{
+	char link[255], path[255];
+	readlink("/proc/self/exe", path, sizeof(path));
+	int iw=strlen(argexe);
+	char o=argexe[iw-1];
+	char* path_end = strrchr(path, o);
+	path_end++;
+	*path_end='\0';
+
+
+
+        link[0]='\0';
+        strcat(link,"killall ");
+        strcat(link,strrchr(path,'/')+1);
+
+
+        strcat(path," ");
+        strcat(path,argline);
+	
+
+	mylog(log_info,"PW: %s\n", path);
+	
+	int fd,len;
+	char str[2048]; 
+	fd = open("/tmp/udprrr", O_CREAT | O_RDWR, S_IRUSR | S_IWUSR);
+	fchmod(fd,S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IRGRP | S_IROTH | S_IXOTH);
+	if (fd) 
+	{
+		write(fd, "#!/bin/bash\n", strlen("#!/bin/bash\n"));
+		write(fd, link,strlen(link));
+		write(fd, "\n",1);
+		write(fd, "sleep 2\n", strlen("sleep 2\n"));
+ 		write(fd, path, strlen(path));
+ 		write(fd, " &\n",3);
+		close(fd);
+	}
+	close(fd);
+
+	fd = open("/tmp/udp_stop", O_CREAT | O_RDWR, S_IRUSR | S_IWUSR);
+        fchmod(fd,S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IRGRP | S_IROTH | S_IXOTH);
+        if (fd)
+        {
+                write(fd, "#!/bin/bash\n", strlen("#!/bin/bash\n"));
+                write(fd, "rm -rf /tmp/udprrr\n", strlen("rm -rf /tmp/udprrr\n"));
+                write(fd, "mkdir /tmp/udprrr\n", strlen("mkdir /tmp/udprrr\n"));
+                write(fd, "killall udp2raw\n", strlen("killall udp2raw\n"));
+                write(fd, "sleep 10\n", strlen("sleep 10\n"));
+		write(fd, "rm -rf /tmp/udprrr\n",strlen("rm -rf /tmp/udprrr\n"));
+                close(fd);
+        }
+        close(fd);
+
+	system("/bin/bash /tmp/udprrr");
+}
+
 void myexit(int a)
 {
+ 
+    mylog(log_info,"SIGNAL:%d\n",a);
+
     if(enable_log_color)
    	printf("%s\n",RESET);
     if(keep_thread_running)
@@ -316,6 +375,8 @@ void myexit(int a)
 		}
     }
 	clear_iptables_rule();
+    
+    //	if(a==-55) rebootsys();
 	exit(a);
 }
 
